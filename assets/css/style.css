@@ -467,7 +467,7 @@ ol.num>li::before{counter-increment:n;content:"(" counter(n) ")";position:absolu
 .f-l{font-weight:700;font-size:15px;line-height:1.6;padding-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .req,.opt{font-size:11px;font-weight:700;padding:1px 8px;line-height:1.7}
 .req{background:var(--teal);color:#ffffff}
-.opt{background:var(--rule);color:var(--muted)}
+.opt{background:var(--rule);color:#3f4c50}
 .f-in input[type=text],.f-in input[type=email],.f-in input[type=tel],.f-in select,.f-in textarea{width:100%;max-width:560px;border:1px solid var(--hatch);background:#ffffff;padding:11px 14px;font-size:16px;line-height:1.6;border-radius:0}
 .f-in textarea{min-height:180px;resize:vertical;max-width:none}
 .f-in input:focus,.f-in select:focus,.f-in textarea:focus{outline:2px solid var(--teal);outline-offset:0;border-color:var(--teal)}
@@ -557,3 +557,65 @@ ol.num>li::before{counter-increment:n;content:"(" counter(n) ")";position:absolu
 .legal h3{font-weight:700;font-size:16px;line-height:1.7;margin-top:20px;color:var(--teal)}
 .f-in input[type=file]{display:block;max-width:100%;padding:10px;border:1px dashed var(--hatch);background:#ffffff;font-size:14px}
 .map-pin span{white-space:normal;max-width:min(320px,80vw);text-align:center}
+
+/* =========================================================
+   FIXES 2026-11 (test round 1)
+   ========================================================= */
+/* #4 Japanese phrase-aware line breaks for headings & quotes */
+h1,h2,h3,h4,.ph-catch,.mv-sub,.cx-q,.q-big,.voice-q,.sheet-slogan,.fp-h,.svc-h,.who-st,.rc-h,.ct-h,.box h3,.st-b h3,.faq summary,.crumb{word-break:auto-phrase;line-break:strict}
+.ph-code{overflow-wrap:anywhere}
+
+/* #2 sticky in-page nav + back to top */
+html:has(.lnav){scroll-padding-top:136px}
+.lnav{position:sticky;top:calc(var(--hd) + env(safe-area-inset-top,0px));z-index:20;box-shadow:0 1px 0 var(--rule)}
+.lnav a[aria-current="true"]{background:var(--pale);box-shadow:inset 0 -2px 0 var(--teal)}
+.totop{position:fixed;z-index:34;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));width:48px;height:48px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--ink);color:var(--ink);font-family:var(--f-mono);font-size:18px;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s,transform .25s,visibility .25s}
+.totop.show{opacity:1;visibility:visible;transform:none}
+.totop:hover{background:var(--ink);color:#ffffff}
+
+/* #1 fold long blocks on phones (JS adds .folded + button) */
+.folded{position:relative;max-height:10.5em;overflow:hidden}
+.folded::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4.5em;background:linear-gradient(rgba(255,255,255,0),var(--fold-bg,#ffffff));pointer-events:none}
+.fold-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:4px;padding:0 2px;border:0;background:none;color:var(--teal);font-weight:700;font-size:15px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.fold-btn::after{content:"+";font-family:var(--f-mono);font-size:18px;text-decoration:none}
+.fold-btn[aria-expanded="true"]::after{content:"−"}
+
+/* #6 no floating contact button on the contact page */
+body:has(#cform) .follow{display:none}
+.ph-jump{margin-top:22px}
+
+/* #11 comfortable line length on desktop */
+.spec dd,.items span,.sheet p,.case-b p,.card p,.st-b p,.policy p,.legal p,.legal li,.voice-b p,.box p,.prose p{max-width:42em}
+.legal{max-width:46em}
+.faq .a p{max-width:42em}
+.f-agree a{display:inline-block;padding-block:10px}
+
+/* #9 tap targets */
+.ft-map a{padding-block:8px}
+.ft-bt a{display:inline-block;padding-block:10px}
+.crumb a{display:inline-block;padding-block:10px}
+.more{min-height:44px;padding-block:8px 2px;margin-top:12px}
+.brand{padding-block:7px}
+
+@media (max-width:1023px){
+ /* #3 drawing labels: hide sub-labels, enlarge main labels on small screens */
+ .iso .lbl text:nth-of-type(3){display:none}
+ .iso .lbl text:nth-of-type(1){font-size:13px}
+ .iso .lbl text:nth-of-type(2){font-size:18px}
+}
+@media (max-width:767px){
+ /* #5 photo first in page heroes */
+ .ph-g>.photo,.ph-g>.ph-fig{order:-1}
+ .ph-g .photo{aspect-ratio:16/9!important}
+ body:has(#cform) .ph-g .photo{aspect-ratio:5/2!important}
+ body:has(#cform) .ph-lead{font-size:14.5px;line-height:1.8}
+ .ph-g{margin-top:16px;gap:20px}
+ .ph-fig .thumb{bottom:-24px;width:64px}
+ .ph-code{font-size:12px;letter-spacing:.08em}
+ /* #10 solid paper behind text that sits on the grid */
+ .mv-copy,.ph-t{background:var(--paper);box-shadow:0 0 0 12px var(--paper)}
+ /* #8 minimum 12px small labels on phones */
+ .gl .en,.dd-m .top,.fp-k,.lbl-k,.st-n,.case-k,.case-b h4,.member .role,.card .no,.ft-map .fh,.sheet-h .mono,.lnav a .mono,.phase .mono,.co-g .mono,.str .mono,.cx-tag .mono,.svc-code+p,.req,.opt,.policy h3 small,.sign small,.tl time,.tl .y,.photo-note b,.eyebrow,.wall-cap p.mono,.finder-q small,.osv .mono,.photo-note{font-size:12px}
+ .st-n b{font-size:18px}
+ .totop{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
